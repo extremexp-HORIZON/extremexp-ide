@@ -26,7 +26,12 @@
         ],
         "configuration": "./xxp.configuration.json"
       }
-    ]
+    ],
+    "grammars": [{
+      "language": "xxplang",
+      "scopeName": "source.xxp",
+      "path": "./syntaxes/xxp.tmLanguage.json"
+    }]
   },
   "scripts": {
     "prepublish": "tsc -p ./src",
