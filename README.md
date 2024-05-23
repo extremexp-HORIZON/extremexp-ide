@@ -67,7 +67,7 @@ First download the image using:
 ```bash
 curl -O http://expvis.smartarch.cz:8080/xxp-lang-server-image.tar
 ```
-Create a folder for your **examples**, then load the image and run it as a container using `docker` or `podman`. 
+Create a folder for your **examples**. Load the image and run it as a container using `docker` or `podman`. 
 
 
 - **Docker**
@@ -89,7 +89,7 @@ Create a folder for your **examples**, then load the image and run it as a conta
         command: /lang_server/run.sh
     ```
 
-    Then run the docker:
+    Then run the docker container:
     ```bash
     docker compose up -d
     ```
@@ -97,12 +97,13 @@ Create a folder for your **examples**, then load the image and run it as a conta
 OR
 
 - **Podman**
+    Load the image
     ```bash
     podman load -i xxp-lang-server-image.tar
     ```
 
+    Run in one line,
     ```bash
-    mkdir examples
     podman run --detach --name xxp-lang-editor --publish 127.0.0.1:8080:8080/tcp -v /<path>/<to>/examples/:/home/ubuntu/:rw xxp-lang-server-image /lang_server/run.sh
     ```
 
