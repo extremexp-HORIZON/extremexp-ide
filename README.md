@@ -57,5 +57,78 @@ For a full documentation please attend to [Language Server Extension Guide](http
 
 Once the extension project is closed, the server listener is also closed.
 
-### IntelliJ IDEA
+
+## Hosting the language server
+The language server can be hosted with both the client and server sides in one container and accessed with the web editor. The editor is an instance of [code-server](https://github.com/coder/code-server), which enables `vs-code` to run from a browser. For this we provide a docker image  configured and loaded with both client and server side files. 
+
+### Linux
+First download the image using:
+
+```bash
+curl -O http://expvis.smartarch.cz:8080/xxp-lang-server-image.tar
+```
+Create a folder for your **examples**, then load the image and run it as a container using `docker` or `podman`. 
+
+
+- **Docker**
+    ```bash
+    docker load -i xxp-lang-server-image.tar
+    ```
+
+    Under `/opt/` create a folder with name of `xxp-lang-editor`, and the `cd` to it. Then create `docker-compose.yml` as:
+
+    ```yaml
+    services:
+    xxp-lang-editor:
+        image: localhost/xxp-lang-server-image
+        container_name: xxp-lang-editor
+        ports:
+        - "127.0.0.1:8080:8080"
+        volumes:
+        - /<path>/<to>/examples:/home/ubuntu:rw
+        command: /lang_server/run.sh
+    ```
+
+    Then run the docker:
+    ```bash
+    docker compose up -d
+    ```
+
+OR
+
+- **Podman**
+    ```bash
+    podman load -i xxp-lang-server-image.tar
+    ```
+
+    ```bash
+    mkdir examples
+    podman run --detach --name xxp-lang-editor --publish 127.0.0.1:8080:8080/tcp -v /<path>/<to>/examples/:/home/ubuntu/:rw xxp-lang-server-image /lang_server/run.sh
+    ```
+
+
+Now the editor should be running and the example folder is accessible on 
+
+http://127.0.0.1:8080/?folder=/home/ubuntu
+
+To stop the container use:
+
+#### Podman
+```bash
+podman kill xxp-lang-editor
+```
+
+#### Docker
+```bash
+cd /opt/xxp-lang-editor/
+docker compose down
+```
+
+#### Note
+If you are hosting the editor on a server you may publish to `0.0.0.0:<PORT>` and make sure that `ipv4` ip forwarding is enabled on your server. Open **/etc/sysctl.conf** and uncomment (or set) `net.ipv4.ip_forward = 1`.
+
+
+
+
+### Windows
 TODO
