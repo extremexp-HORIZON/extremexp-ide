@@ -65,7 +65,7 @@ The language server can be hosted with both the client and server sides in one c
 First download the image using:
 
 ```bash
-curl -O http://expvis.smartarch.cz:8080/xxp-lang-server-image.tar
+curl -O https://expvis.smartarch.cz/xxp-lang-server-image.tar
 ```
 Create a folder for your **examples**. Load the image and run it as a container using `docker` or `podman`. 
 
@@ -75,17 +75,17 @@ Create a folder for your **examples**. Load the image and run it as a container 
     docker load -i xxp-lang-server-image.tar
     ```
 
-    Under `/opt/` create a folder with name of `xxp-lang-editor`, and the `cd` to it. Then create `docker-compose.yml` as:
+    Under `/opt/` create a folder with name of `xxp-lang-ide`, and the `cd` to it. Then create `docker-compose.yml` as:
 
     ```yaml
     services:
-    xxp-lang-editor:
+    xxp-lang-ide:
         image: localhost/xxp-lang-server-image
-        container_name: xxp-lang-editor
+        container_name: xxp-lang-ide
         ports:
-        - "127.0.0.1:8080:8080"
+        - "127.0.0.1:8080:80"
         volumes:
-        - /<path>/<to>/examples:/home/ubuntu:rw
+        - /<path>/<to>/examples/:/user/repos/examples/:rw
         command: /lang_server/run.sh
     ```
 
@@ -104,13 +104,13 @@ OR
 
     Run in one line,
     ```bash
-    podman run --detach --name xxp-lang-editor --publish 127.0.0.1:8080:8080/tcp -v /<path>/<to>/examples/:/home/ubuntu/:rw xxp-lang-server-image /lang_server/run.sh
+    podman run --detach --name xxp-lang-ide --publish 127.0.0.1:8080:80/tcp -v /<path>/<to>/examples/:/user/repos/examples/:rw xxp-lang-server-image /lang_server/run.sh
     ```
 
 
-Now the editor should be running and the example folder is accessible on 
+Now the IDE should be running and the example folder is accessible on 
 
-http://127.0.0.1:8080/?folder=/home/ubuntu
+http://127.0.0.1:8080/?folder=/home/user/repos/examples
 
 To stop the container use:
 
