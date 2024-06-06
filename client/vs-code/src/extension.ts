@@ -11,7 +11,7 @@ let lc: LanguageClient;
 export function activate(context: ExtensionContext) {
     // The server is a started as a separate app and listens on port 5007
     let connectionInfo = {
-       	host: process.env.lANG_SERVER_HOST || "localhost",
+       	host: process.env.lANG_SERVER_HOST || "expvis.smartarch.cz",
 	port: parseInt(process.env.LANG_SERVER_PORT || "5007", 10)
     };
      
