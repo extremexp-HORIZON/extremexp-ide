@@ -12,7 +12,7 @@ RUN npm install -g @vscode/vsce
 RUN vsce package --allow-missing-repository --skip-license
 
 
-# We want to have a user for the code server, where they cannot stop the server (but they sill can :D)
+# We want to have a user for the code server, where they cannot stop the server
 RUN useradd -m -s /bin/bash user && \
     echo "user:password" | chpasswd && \
     mkdir -p /home/user/workspace && \
@@ -20,7 +20,7 @@ RUN useradd -m -s /bin/bash user && \
     chown -R user:user /home/user/workspace && \
     chown -R user:user /etc/xxp-lang-server/logs
 
-# another attemp t with the scripts to be run by the user
+# another attempt with the scripts to be run by the user
 COPY ./run.sh /home/user/.run.sh
 RUN cp  /etc/xxp-lang-server/client/vs-code/xxp-language-0.0.1.vsix /home/user/xxp-language-0.0.1.vsix
 RUN chown user:user /home/user/.run.sh && chmod +x /home/user/.run.sh
