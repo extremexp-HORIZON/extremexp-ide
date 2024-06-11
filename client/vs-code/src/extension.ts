@@ -11,8 +11,10 @@ let lc: LanguageClient;
 export function activate(context: ExtensionContext) {
     // The server is a started as a separate app and listens on port 5007
     let connectionInfo = {
-        port: 5007
+       	host: process.env.LANG_SERVER_HOST || "localhost",
+	port: parseInt(process.env.LANG_SERVER_PORT || "5007", 10)
     };
+     
     let serverOptions = () => {
         // Connect to language server via socket
         let socket = net.connect(connectionInfo);
