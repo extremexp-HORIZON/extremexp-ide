@@ -28,7 +28,7 @@ RUN chown user:user /home/user/.run.sh && chmod +x /home/user/.run.sh
 
 EXPOSE 8080
 
-# Switch to user from now on
+# Switch back to the user user
 USER user
 
 # optional 
