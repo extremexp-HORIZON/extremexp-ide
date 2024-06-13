@@ -25,7 +25,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.xxp",
-				"match": "\\b(implementation|define|configure|from|condition|exception|schema)\\b"
+				"match": "\\b(implementation|define|configure|from|condition|exception|schema|generates|as)\\b"
 			},
 			{
 				"name": "keyword.operator.xxp",
@@ -39,7 +39,7 @@
 			},
 			{
 				"name": "entity.name.type.xxp",
-				"match": "\\b(data|param)\\b"
+				"match": "\\b(data|param|metric)\\b"
 			},
 			{
 				"name":  "entity.name.tag.xxp",
@@ -64,7 +64,7 @@
 				},
 				{
 					"name":  "constant.language.xxp",
-					"match": "\\b(START|END)\\b"
+					"match": "\\b(START|END|blob|primitive|structure|field|series)\\b"
 				}
 			]
 		},
