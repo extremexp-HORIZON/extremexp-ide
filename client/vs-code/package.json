@@ -27,11 +27,13 @@
         "configuration": "./xxp.configuration.json"
       }
     ],
-    "grammars": [{
-      "language": "xxplang",
-      "scopeName": "source.xxp",
-      "path": "./syntaxes/xxp.tmLanguage.json"
-    }]
+    "grammars": [
+      {
+        "language": "xxplang",
+        "scopeName": "source.xxp",
+        "path": "./syntaxes/xxp.tmLanguage.json"
+      }
+    ]
   },
   "scripts": {
     "prepublish": "tsc -p ./src",
@@ -47,6 +49,7 @@
   },
   "dependencies": {
     "build": "^0.1.4",
-    "vscode-languageclient": "^9.0.1"
+    "vscode-languageclient": "^9.0.1",
+    "xxp-language": "file:"
   }
 }

@@ -25,7 +25,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.xxp",
-				"match": "\\b(implementation|define|configure|from|condition|exception|schema|generates|as)\\b"
+				"match": "\\b(implementation|dependency|define|configure|from|condition|exception|schema|event|type|default|range|enum|kind|as|metadata|description|intent|interaction|control)\\b"
 			},
 			{
 				"name": "keyword.operator.xxp",
@@ -35,15 +35,15 @@
 		"entities": {
 			"patterns": [{
 				"name": "entity.name.function.xxp",
-				"match": "\\b(workflow|task|package)\\b"
+				"match": "\\b(workflow|task|package|experiment)\\b"
 			},
 			{
 				"name": "entity.name.type.xxp",
-				"match": "\\b(data|param|metric)\\b"
+				"match": "\\b(data|param|metric|input|output|space)\\b"
 			},
 			{
 				"name":  "entity.name.tag.xxp",
-				"match": "\\b(PARALLEL|EXCLUSIVE|INCLUSIVE|COMPLEX)-(END-)?[0-9]+\\b"
+				"match": "\\b(PARALLEL|EXCLUSIVE|INCLUSIVE|JOIN)-(END-)?[0-9]+\\b"
 			}]
 		},		
 		"sl-comments": {
@@ -64,7 +64,7 @@
 				},
 				{
 					"name":  "constant.language.xxp",
-					"match": "\\b(START|END|blob|primitive|structure|field|series)\\b"
+					"match": "\\b(START|END|blob|primitive|struct|scalar|series|Integer|Boolean|String|Blob|strategy)\\b"
 				}
 			]
 		},
