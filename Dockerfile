@@ -1,6 +1,7 @@
 FROM node:22
 
-RUN npm install --global code-server --unsafe-perm
+RUN curl -fsSL https://code-server.dev/install.sh | sh
+#RUN npm install --global code-server  --unsafe-perm
 
 # build our extension
 WORKDIR /etc/xxp-lang-server
