@@ -9,6 +9,7 @@ COPY . .
 WORKDIR /etc/xxp-lang-server/client/vs-code
 RUN npm install
 RUN npm install -g @vscode/vsce
+RUN npm uninstall xxp-language
 RUN vsce package --allow-missing-repository --skip-license
 
 
