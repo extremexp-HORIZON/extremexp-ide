@@ -1,7 +1,6 @@
 FROM node:22
 
 RUN curl -fsSL https://code-server.dev/install.sh | sh
-#RUN npm install --global code-server  --unsafe-perm
 
 # build our extension
 WORKDIR /etc/xxp-lang-server
@@ -15,17 +14,17 @@ RUN vsce package --allow-missing-repository --skip-license
 
 
 # We want to have a user for the code server, where they cannot stop the server
-RUN useradd -m -s /bin/bash user && \
+RUN useradd -m -g root -s /bin/bash user && \
     echo "user:password" | chpasswd && \
     mkdir -p /home/user/workspace && \
     mkdir -p /etc/xxp-lang-server/logs && \
-    chown -R user:user /home/user/workspace && \
-    chown -R user:user /etc/xxp-lang-server/logs
+    chown -R user:root /home/user/workspace && \
+    chown -R user:root /etc/xxp-lang-server/logs
 
 # another attempt with the scripts to be run by the user
 COPY ./run.sh /home/user/.run.sh
 RUN cp  /etc/xxp-lang-server/client/vs-code/xxp-language-0.0.1.vsix /home/user/xxp-language-0.0.1.vsix
-RUN chown user:user /home/user/.run.sh && chmod +x /home/user/.run.sh
+RUN chown user:root /home/user/.run.sh && chmod +x /home/user/.run.sh
 
 
 EXPOSE 8080
