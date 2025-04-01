@@ -5,13 +5,7 @@ The language server provides grammar validation of DSL in preferred editor, for 
 - Client side: the VS code instance which installs the XXP language extension
 
 ## Deployment
-There are two ways to deploy the IDE with Docker:
-
-1. [Independent](#independent-deployment): where the IDE stands alone
-1. [Integrated](#integrated-deployment): The IDE will be part of the ExtremeXP Portal and will be shown as an iframe
-
-
-### Independent Deployment
+The IDE can be deployed using docker. Clone the following repos and then set the variables.
 
 1. The IDE repo (current repo)
 1. The language server repo (https://github.com/extremexp-HORIZON/extremexp-dsl-framework)
@@ -34,11 +28,12 @@ Set the following global variables:
 
 Once the variables are set, then run the docker compose as following:
 ```bash
-/path/to/extremexp-ide$  docker compose -f docker-compose-independent.yml up -d
+/path/to/extremexp-ide$  docker compose up -d
 ```
 
 Once run, the http://x.x.x.x:8080/?folder=/home/user/workspace/ should show an instance of VS code which the XXP DSL is enabled in it. Note that the syntax highlight and syntax correction is both available in the IDE
 
 ![alt text](readme-contents/front-page.png)
 
-### Integrated Deployment
+### Integration with the Portal
+The portal, the IDE and language server will write xxp files (the DSL) in the shared workspace. During deployment of the portal and the IDE, it is recommended to use one directory that is on **SHARED_WORKSPACE_PATH** for all the related services. 
