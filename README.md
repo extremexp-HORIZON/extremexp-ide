@@ -1,50 +1,44 @@
 # Experiment DSL Language Server
 The language server provides grammar validation of DSL in preferred editor, for example Visual Studio Code or IntelliJ IDEA. The language server has fundamentally two sides, server side and clients side. 
 
-## Clone the language server
-To run the IDE with XXP language (the DSL) enabled, there are two repos that need to be cloned and both services are required to run together.
+- Server side: the language server written in XText and running in JAVA
+- Client side: the VS code instance which installs the XXP language extension
 
-1. **experiment-dsl-lang-server**: current repo
-2. **extremexp-dsl-framework**: https://colab-repo.intracom-telecom.com/colab-projects/extremexp/experiment-modelling/extremexp-dsl-framework
+## Deployment
+There are two ways to deploy the IDE with Docker:
 
-## Docker composition
-Save the below in a `docker-compose.yml` file, then add other services that you would like to have on the same network, and run it. Before running, change  `{...}` to locations of repos and directories of your own.
+1. [Independent](#independent-deployment): where the IDE stands alone
+1. [Integrated](#integrated-deployment): The IDE will be part of the ExtremeXP Portal and will be shown as an iframe
 
-Directories to be created and used:
-- *workspace* where `.xxp` files exist
-- *logs*, some directory to store logs
 
-```yml
-services:
-   ...
+### Independent Deployment
 
-  lang-server:
-    build:
-      context: {path-to-extremexp-dsl-framework}/
-      dockerfile: {path-to-extremexp-dsl-framework}/Dockerfile
-    volumes:
-      - {path-to-some-dir-for-logs}:/opt/logs/:wr
-      - {path-to-the-workspace}:/home/user/workspace/:wr
-    ports:
-      - "127.0.0.1:5007:5007"
-      
-  code-server:
-    build:
-      context: {path-to-experiment-dsl-lang-server}/
-      dockerfile: {path-to-experiment-dsl-lang-server}/Dockerfile
-    environment:
-      - PASSWORD=xxp-cuni
-      - CODE_SERVER_HOST=0
-      - CODE_SERVER_PORT=8080
-      - CODE_SERVER_ORIGIN="http://127.0.0.1"
-      - CODE_SERVER_WELCOME_TEXT="WELCOME TO XXP IDE"
-      - LANG_SERVER_HOST=lang-server
-      - LANG_SERVER_PORT=5007
-    volumes:
-      - {path-to-the-workspace}/:/home/user/workspace/:wr
-      - {path-to-some-dir-for-logs}/:/etc/xxp-lang-server/logs/:wr
-    ports:
-      - "127.0.0.1:8080:8080/tcp"
-    depends_on:
-      - lang-server
+1. The IDE repo (current repo)
+1. The language server repo (https://github.com/extremexp-HORIZON/extremexp-dsl-framework)
+
+Set the following global variables:
+```bash
+  export DSL_REPO_PATH=/path/to/extremexp-dsl-framework
+  export DSL_LOGS_PATH=/path/to/logs/lang-server/ #this directory should exist
+  
+  export IDE_REPO_PATH=/path/to/extremexp-ide
+  export IDE_LOGS_PATH=/path/to/logs/ide/ #this directory should exist
+
+  export IDE_HOST_URL=http://x.x.x.x   # ip of the current running server
+
+  export SHARED_WORKSPACE_PATH=/path/to/shared/workspace # this directory should exist with <x>:<root> owner
 ```
+
+**NOTE**, if `root` is running the docker, the shared workspace can be owned under root:root.
+
+
+Once the variables are set, then run the docker compose as following:
+```bash
+/path/to/extremexp-ide$  docker compose -f docker-compose-independent.yml up -d
+```
+
+Once run, the http://x.x.x.x:8080/?folder=/home/user/workspace/ should show an instance of VS code which the XXP DSL is enabled in it. Note that the syntax highlight and syntax correction is both available in the IDE
+
+![alt text](readme-contents/front-page.png)
+
+### Integrated Deployment
