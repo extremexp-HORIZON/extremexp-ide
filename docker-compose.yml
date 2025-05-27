@@ -33,7 +33,23 @@ services:
       - lang-server
     networks:
       - independent
-  
+
+  extremexp-fs:
+    container_name: fs
+    build:
+      context: $FS_REPO_PATH/
+      dockerfile: $FS_REPO_PATH/Dockerfile
+    environment:
+      - WORKSPACE_PATH="/app/workspace"
+      - ARCHIVES_PATH="/app/archives"
+    ports:
+      - "9090:9090"
+    volumes:
+      - $SHARED_WORKSPACE_PATH:/app/workspace/:wr
+    restart: unless-stopped
+    networks:
+      - independent
+
 networks:
   independent:
     driver: bridge
